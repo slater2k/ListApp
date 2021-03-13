@@ -9,6 +9,7 @@ class RegisterRequest extends BaseRequest {
                 .min(3)
                 .max(30)
                 .required()
+                .label('Username')
                 .messages({
                     'string.alphanum': `Username cannot contain any special characters`,
                     'string.min': `Username must be longer than 3 characters`,
@@ -21,6 +22,7 @@ class RegisterRequest extends BaseRequest {
                 .min(3)
                 .max(255)
                 .required()
+                .label('Password')
                 .messages({
                     'string.alphanum': `Username cannot contain any special characters`,
                     'string.min': `Username must be longer than 3 characters`,

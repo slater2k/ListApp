@@ -25,7 +25,7 @@ class UsersController {
         const validated = await request.validate();
 
         if (!!validated.error) {
-            return res.json(validated.error.details);
+            return res.json(validated.error);
         }
 
         return res.json(req.body);
