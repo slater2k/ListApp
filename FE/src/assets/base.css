@@ -16,7 +16,6 @@ code {
   border-radius: unset;
   margin-bottom:10px;
   border-color: #ddd;
-  box-shadow: 0.3rem 0.3rem 0.3rem #ddd;
 }
 
 .legendary-user {
@@ -102,4 +101,13 @@ ul.timeline > li:before {
   width: 20px;
   height: 20px;
   z-index: 400;
+}
+
+#listApp {
+  background-color: #fafafa;
+}
+
+nav.navbar {
+  background-color: white;
+  border-bottom: 1px solid #ddd
 }

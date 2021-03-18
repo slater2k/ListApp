@@ -146,18 +146,20 @@ function Main() {
     return (
         <Router>
             <Navigation />
-            <div className="container mt-5">
-                <Switch>
-                    <Route exact path="/">
-                        <List fakeListData={fakeListData} />
-                    </Route>
-                    <Route path="/user/:userId">
-                        <ListUser fakeListData={fakeListData} />
-                    </Route>
-                    <Route path="/account">
-                        <Account />
-                    </Route>
-                </Switch>
+            <div id="main-container" className="container">
+                <div className="content-inner pt-3 pb-5">
+                    <Switch>
+                        <Route exact path="/">
+                            <List fakeListData={fakeListData} />
+                        </Route>
+                        <Route path="/user/:userId">
+                            <ListUser fakeListData={fakeListData} />
+                        </Route>
+                        <Route path="/account">
+                            <Account />
+                        </Route>
+                    </Switch>
+                </div>
             </div>
         </Router>
     );
