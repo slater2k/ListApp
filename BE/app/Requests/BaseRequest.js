@@ -23,7 +23,7 @@ class BaseRequest {
     validate() {
         let { value, error } = this.schema.validate(this.original, {abortEarly: false});
 
-        error = error.details.map((err) => {
+        error = error?.details.map((err) => {
             return {
                 message: err.message,
                 field: err.context.label

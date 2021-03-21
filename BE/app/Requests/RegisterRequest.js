@@ -5,29 +5,26 @@ class RegisterRequest extends BaseRequest {
     get schema() {
         return Joi.object({
             username: Joi.string()
-                .alphanum()
+                .trim(true)
                 .min(3)
                 .max(30)
                 .required()
                 .label('Username')
                 .messages({
-                    'string.alphanum': `Username cannot contain any special characters`,
                     'string.min': `Username must be longer than 3 characters`,
                     'string.max': `Username must not be longer than 30 characters`,
-                    'any.required': `Username is required`
+                    'any.required': `Username is required`,
                 }),
 
             password: Joi.string()
-                .alphanum()
-                .min(3)
+                .min(5)
                 .max(255)
                 .required()
                 .label('Password')
                 .messages({
-                    'string.alphanum': `Username cannot contain any special characters`,
-                    'string.min': `Username must be longer than 3 characters`,
-                    'string.max': `Username must not be longer than 30 characters`,
-                    'any.required': `Username is required`
+                    'string.min': `Password must be longer than 5 characters`,
+                    'string.max': `Password must not be longer than 255 characters`,
+                    'any.required': `Password is required`,
                 }),
         });
     }
