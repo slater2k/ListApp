@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donations",
+  "info": {
+    "name": "donations",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "users_permissions_user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "donations"
+    },
+    "points": {
+      "type": "integer"
+    },
+    "amount": {
+      "type": "float"
+    }
+  }
+}
