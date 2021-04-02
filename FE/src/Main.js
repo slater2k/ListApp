@@ -5,38 +5,27 @@ import Account from "./Account";
 import ListUser from "./ListUser";
 import { useEffect, useState } from 'react';
 
-function Main() {
-
-    const fakeListData = [{
-        "id": 1,
-        "first_name": "Antonetta",
-        "last_name": "Beyne",
-        "email": "abeyne0@imdb.com",
-        "profile_image": "http://dummyimage.com/198x196.bmp/ff4444/ffffff",
-        "ip_address": "153.132.139.63",
-        "list_rank": 4,
-        "score": "739"
-    }];
-    
+function Main() {    
     const [users, setUsers] = useState([]);
 
+    const getUsers = async () => {
+        const res = await (await fetch('http://35.178.75.202:13337/users')).json();
+        let counter = 1;
+        setUsers(res.map((user) => {
+            return {
+                "id": user.id,
+                "first_name": user.username,
+                "last_name": "", // TODO do we want last names or just usernames
+                "email": user.email,
+                "profile_image": "http://dummyimage.com/198x196.bmp/ff4444/ffffff",
+                "ip_address": "",
+                "list_rank": counter++, // TODO this is a dummy rank
+                "score": 100 - counter // TODO this is a dummy score
+            }
+        }));
+    }
+
     useEffect(() => {
-        const getUsers = async () => {
-            const res = await (await fetch('http://35.178.75.202:13337/users')).json();
-            let counter = 1;
-            setUsers(res.map((user) => {
-                return {
-                    "id": user.id,
-                    "first_name": user.username,
-                    "last_name": "",
-                    "email": user.email,
-                    "profile_image": "http://dummyimage.com/198x196.bmp/ff4444/ffffff",
-                    "ip_address": "",
-                    "list_rank": counter++,
-                    "score": 100 - counter
-                }
-            }));
-        }
         getUsers();
     }, []);
 
