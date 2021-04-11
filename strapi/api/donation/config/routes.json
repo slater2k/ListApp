@@ -3,7 +3,7 @@
     {
       "method": "GET",
       "path": "/donations",
-      "handler": "donations.find",
+      "handler": "donation.find",
       "config": {
         "policies": []
       }
@@ -11,7 +11,15 @@
     {
       "method": "GET",
       "path": "/donations/count",
-      "handler": "donations.count",
+      "handler": "donation.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/donations/create-checkout/:donation_id",
+      "handler": "donation.createCheckout",
       "config": {
         "policies": []
       }
@@ -19,7 +27,7 @@
     {
       "method": "GET",
       "path": "/donations/:id",
-      "handler": "donations.findOne",
+      "handler": "donation.findOne",
       "config": {
         "policies": []
       }
@@ -27,7 +35,7 @@
     {
       "method": "POST",
       "path": "/donations",
-      "handler": "donations.create",
+      "handler": "donation.create",
       "config": {
         "policies": []
       }
@@ -35,7 +43,7 @@
     {
       "method": "PUT",
       "path": "/donations/:id",
-      "handler": "donations.update",
+      "handler": "donation.update",
       "config": {
         "policies": []
       }
@@ -43,7 +51,7 @@
     {
       "method": "DELETE",
       "path": "/donations/:id",
-      "handler": "donations.delete",
+      "handler": "donation.delete",
       "config": {
         "policies": []
       }

@@ -9,7 +9,7 @@ function Main() {
     const [users, setUsers] = useState([]);
 
     const getUsers = async () => {
-        const res = await (await fetch('http://35.178.75.202:13337/users')).json();
+        const res = await (await fetch('http://127.0.0.1:13337/users')).json();
         let counter = 1;
         setUsers(res.map((user) => {
             return {

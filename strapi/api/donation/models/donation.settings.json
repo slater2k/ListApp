@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donations",
+  "info": {
+    "name": "Donation",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "points": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    },
+    "user": {
+      "columnName": "user_id",
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "donations"
+    },
+    "confirmed_on": {
+      "type": "datetime"
+    },
+    "price": {
+      "default": 0,
+      "required": true,
+      "type": "decimal"
+    }
+  }
+}

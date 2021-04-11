@@ -64,8 +64,9 @@
       "private": true
     },
     "donations": {
-      "via": "users_permissions_user",
-      "collection": "donations"
+      "via": "user",
+      "columnName": "donation_id",
+      "collection": "donation"
     }
   }
 }
