@@ -25,6 +25,14 @@
       }
     },
     {
+      "method": "POST",
+      "path": "/stripe-webhook",
+      "handler": "donation.stripeWebhook",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "GET",
       "path": "/donations/:id",
       "handler": "donation.findOne",

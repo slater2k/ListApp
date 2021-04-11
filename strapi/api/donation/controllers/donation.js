@@ -74,5 +74,30 @@ module.exports = {
 
     // return checkout session id
     return { checkout_session: session.id, donation, price };
-  }
+  },
+
+  async stripeWebhook(ctx) {
+    const payload = ctx.body;
+    const sig = ctx.request.headers["stripe-signature"];
+
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(
+        payload,
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET
+      );
+    } catch (err) {
+      ctx.response.status = 400;
+      ctx.response.message = `Webhook Error: ${err.message}`;
+      return ctx.response;
+    }
+
+    if ((event.type == "checkout.session.completed")) {
+      // update the confirmed_at field to the current datetime
+    }
+
+    return { yerd: "yerd" };
+  },
 };
