@@ -17,14 +17,6 @@
       }
     },
     {
-      "method": "GET",
-      "path": "/donations/create-checkout/:donation_id",
-      "handler": "donation.createCheckout",
-      "config": {
-        "policies": []
-      }
-    },
-    {
       "method": "POST",
       "path": "/stripe-webhook",
       "handler": "donation.stripeWebhook",

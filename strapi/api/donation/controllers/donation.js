@@ -9,12 +9,14 @@ const unparsed = require('koa-body/unparsed.js');
  */
 
 module.exports = {
+
   /**
-   * Create a record.
+   * Create a donation.  Then create a Stripe checkout session for said donation
    *
    * @return {Object}
    */
   async create(ctx) {
+    // Standard Strapi create entity
     let entity;
     if (ctx.is("multipart")) {
       const { data, files } = parseMultipartData(ctx);
@@ -22,37 +24,11 @@ module.exports = {
     } else {
       entity = await strapi.services.donation.create(ctx.request.body);
     }
-    return sanitizeEntity(entity, { model: strapi.models.donation });
-  },
+    const donation = sanitizeEntity(entity, { model: strapi.models.donation });
 
-  /**
-   * Create Stripe Checkout for the user based on a donation ID
-   *
-   * @param {Object} ctx
-   */
-  async createCheckout(ctx) {
-    const donationId = ctx.params.donation_id;
-    let donation = await strapi.services.donation.findOne({ id: donationId });
-
-    if (!donation) {
-      ctx.response.status = 404;
-      ctx.response.message = "Donation does not exist";
-      return ctx.response;
-    }
-
-    if (donation.confirmed_on != null) {
-      // Payment for this donation has already been made
-      ctx.response.status = 400; // Bad request
-      ctx.response.message = "Payment for this donation has already been made";
-      return ctx.response;
-    }
-
-    // Strip out private fields and relationships
-    donation = sanitizeEntity(donation, { model: strapi.models.donation });
-
+    // Create checkout on Stripe
     const price = donation.price;
-
-    const YOUR_DOMAIN = "http://listapp.glhf.lol:13337";
+    const YOUR_DOMAIN = "https://listapp-api.glhf.lol:13337";
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -85,6 +61,7 @@ module.exports = {
 
     let event;
 
+    // Verify the request came from Stripe
     try {
       event = stripe.webhooks.constructEvent(
         payload,
@@ -98,12 +75,14 @@ module.exports = {
       return ctx.response;
     }
 
-    if (event.type == "checkout.session.completed") {
+    // Handlers
+    if (event.type === "checkout.session.completed") {
       const donationId = event.data.object.metadata.donation_id;
-
       await strapi.services.donation.update({ id: donationId }, { confirmed_on: Date.now() });
+
+      return { success: true, donation_id: donationId };
     }
 
-    return { yerd: "yerd" };
+    return { success: false, message: `No handler for event ${event.type}`};
   },
 };
