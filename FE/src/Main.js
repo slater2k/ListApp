@@ -33,9 +33,9 @@ function Main() {
 
     return (
         <Router>
-            <Navigation />
             <div id="main-container" className="container">
-                <div className="content-inner pt-3 pb-5">
+                <Navigation />
+                <div className="content-inner">
                     <Switch>
                         <Route exact path="/">
                             <List fakeListData={users} />

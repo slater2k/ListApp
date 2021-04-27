@@ -28,9 +28,9 @@ const Navigation = () => {
     };
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light">
-			<div className="container">
-				<div className="navbar-brand">List App</div>
+		<nav className="navbar navbar-expand-lg navbar-light py-4">
+			<div className="container px-0">
+				<div className="navbar-brand">ListApp 🥳</div>
 				<div className="links">
 					<ul className="navbar-nav">
 
@@ -49,7 +49,7 @@ const Navigation = () => {
 							<Link className="nav-link" to="/account">Account</Link>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link" to="/donate">Donate to the cause!</Link>
+							<Link className="nav-link pr-0" to="/donate">Donate to the cause!</Link>
 						</li>
 					</ul>
 				</div>

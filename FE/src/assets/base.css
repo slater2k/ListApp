@@ -25,6 +25,15 @@ code {
   color: black;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+.navbar-brand {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #523bbf !important;
+}
+
 .legendary-user a {
   color: inherit;
 }
@@ -104,16 +113,14 @@ ul.timeline > li:before {
 }
 
 #listApp {
-  background-color: #fafafa;
+  background-color: #f3f3f3;
 }
 
-nav.navbar {
-  background-color: white;
-  border-bottom: 1px solid #ddd
-}
-
-.donate .card {
-  max-width: 500px;
-  margin: auto;
-  margin-top: 2rem;
+#main-container {
+  background-color:#fff;
+  min-height:100vh;
+  max-width: 800px;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  box-shadow: 0.2rem 0.2rem 0.2rem #ddd;
 }
