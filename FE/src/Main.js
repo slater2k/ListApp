@@ -4,6 +4,7 @@ import List from "./List";
 import Account from "./Account";
 import Donate from "./Donate";
 import ListUser from "./ListUser";
+import Login from "./Login";
 import { useEffect, useState } from 'react';
 
 function Main() {    
@@ -48,6 +49,9 @@ function Main() {
                         </Route>
                         <Route path="/donate">
                             <Donate />
+                        </Route>
+                        <Route path="/login">
+                            <Login />
                         </Route>
                     </Switch>
                 </div>
