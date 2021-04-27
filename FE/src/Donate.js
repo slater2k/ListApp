@@ -4,8 +4,13 @@ import * as yup from 'yup';
 import Swal from 'sweetalert2';
 
 const Donate = () => {
+	const getDonationTier = (donationAmount) => {
+		return Math.floor(donationAmount / 100) > 5 ? 5 : Math.floor(donationAmount / 100);
+	}
 
 	const [donationAmount, setDonationAmount] = useState(250);
+
+	const [treasureChest, setTreasureChest] = useState(getDonationTier(donationAmount));
 
     const handleDonate = async (e) => {
 		e.preventDefault();
@@ -56,6 +61,11 @@ const Donate = () => {
         }
     };
 
+	const handleDonationSlider = async (e) => {
+		setDonationAmount(e.target.value)
+		setTreasureChest(getDonationTier(donationAmount));
+	}
+
 	return (
 		<div className="donate">
 			<div className="card">
@@ -63,8 +73,9 @@ const Donate = () => {
 					<div className="card-header">Donate!</div>
 					<div className="card-body">
 						<div className="input-group mb-3">
+							<div className={`chest-${treasureChest} treasure-chest`}></div>
 							<label id="donation-amount" htmlFor="donation-slider" className="form-label d-block w-100 text-center">{donationAmount}</label>
-							<input type="range" className="form-range d-block w-100" name="pennies" min="1" max="500" id="donation-slider" value={donationAmount} onChange={(e) => setDonationAmount(e.target.value)} />
+							<input type="range" className="form-range d-block w-100" name="pennies" min="1" max="500" id="donation-slider" value={donationAmount} onChange={handleDonationSlider} />
 						</div>
 
 						<div className="input-group">

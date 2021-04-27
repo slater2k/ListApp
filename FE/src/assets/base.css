@@ -124,3 +124,28 @@ ul.timeline > li:before {
   border-right: 1px solid #ddd;
   box-shadow: 0.2rem 0.2rem 0.2rem #ddd;
 }
+
+.treasure-chest {
+    height: 300px;
+    width: 300px;
+    background-position: center;
+    background-size: cover;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
+.chest-0 {
+  background-image: url('./chests/0.jpg');
+}
+.chest-1 {
+  background-image: url('./chests/1.jpg');
+}
+.chest-2 {
+  background-image: url('./chests/2.jpg');
+}
+.chest-3 {
+  background-image: url('./chests/3.jpg');
+}
+.chest-4 {
+  background-image: url('./chests/4.jpg');
+}
