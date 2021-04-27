@@ -1,5 +1,7 @@
 import {useState} from "react";
 import { loadStripe } from '@stripe/stripe-js';
+import * as yup from 'yup';
+import Swal from 'sweetalert2';
 
 const Donate = () => {
 
@@ -11,9 +13,24 @@ const Donate = () => {
         // Check user is logged in
 
         // Validate input
-		const pennies = e.target.pennies.value;
+		const userInput = {
+			pennies: e.target.pennies.value
+		};
+		let schema = yup.object().shape({
+			pennies: yup.number().required().positive().integer()
+		})
+		
+		if (!await schema.isValid(userInput)) {
+			Swal.fire({
+				text: 'Invalid amount of money entered!',
+				icon: 'error',
+				confirmButtonText: 'Cool'
+			})
 
-        // POST /donations { price: 69 }
+			return;
+		}
+
+        // POST /donations
 		const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE5NTUwOTgwLCJleHAiOjE2MjIxNDI5ODB9.TCGDfwLe2blaU8njxMuP5GZ-zYlkXO2pS2iqI10wR0Y';
 		let response = await fetch(`http://localhost:13337/donations`, {
 			method: 'POST',
@@ -22,7 +39,7 @@ const Donate = () => {
 				'Authorization': `Bearer ${token}`
 			},
 			body: JSON.stringify({
-				price: pennies
+				price: userInput.pennies
 			})
 		});
 
@@ -35,7 +52,7 @@ const Donate = () => {
             const stripe = await stripePromise;
             await stripe.redirectToCheckout({ sessionId: checkoutSession });
         } catch(e) {
-            console.log(e);
+            console.error(e);
         }
     };
 
