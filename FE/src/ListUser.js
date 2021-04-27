@@ -10,7 +10,7 @@ const ListUser = ({fakeListData}) => {
 		})[0]
 	}
 
-	const { id, first_name, last_name, email, profile_image, ip_address, list_rank, score } = getUserDataById(userId, fakeListData);
+	const { first_name, last_name, email, profile_image, ip_address, list_rank, score } = getUserDataById(userId, fakeListData);
 
 	return (
 		<div className="row gutters">
@@ -18,7 +18,7 @@ const ListUser = ({fakeListData}) => {
 				<div className="card h-100">
 					<div className="card-body">
 						<div className="profile-user-preamble text-center pb-3">
-							<div className="user-avatar mb-3"><img src={profile_image}/></div>
+							<div className="user-avatar mb-3"><img src={profile_image} alt="" /></div>
 							<h5 className="user-name">{first_name} {last_name}</h5>
 							<div className="user-rank">#{list_rank}</div>
 							<div className="user-email d-block mb-1">{score}</div>
