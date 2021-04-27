@@ -35,18 +35,21 @@ const Navigation = () => {
 					<ul className="navbar-nav">
 
                         {/* TODO move this into its own component.  It's just here for testing the checkout */}
-                        <li className="nav-item">
-                            <form action="#">
-                                <input type="range" name="price" id="price" min="0" max="1000" step="1" />
-                                <button type="button" id="checkout-button" onClick={fetchCheckout}>Checkout</button>
-                            </form>
-                        </li>
+                        {/*<li className="nav-item">*/}
+                        {/*    <form action="#">*/}
+                        {/*        <input type="range" name="price" id="price" min="0" max="1000" step="1" />*/}
+                        {/*        <button type="button" id="checkout-button" onClick={fetchCheckout}>Checkout</button>*/}
+                        {/*    </form>*/}
+                        {/*</li>*/}
 
 						<li className="nav-item active">
 							<Link className="nav-link" to="/">Home</Link>
 						</li>
 						<li className="nav-item">
 							<Link className="nav-link" to="/account">Account</Link>
+						</li>
+						<li className="nav-item">
+							<Link className="nav-link" to="/donate">Donate to the cause!</Link>
 						</li>
 					</ul>
 				</div>

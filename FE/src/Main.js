@@ -2,6 +2,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Navigation from "./Navigation";
 import List from "./List";
 import Account from "./Account";
+import Donate from "./Donate";
 import ListUser from "./ListUser";
 import { useEffect, useState } from 'react';
 
@@ -44,6 +45,9 @@ function Main() {
                         </Route>
                         <Route path="/account">
                             <Account />
+                        </Route>
+                        <Route path="/donate">
+                            <Donate />
                         </Route>
                     </Switch>
                 </div>

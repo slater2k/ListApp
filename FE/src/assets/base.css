@@ -111,3 +111,9 @@ nav.navbar {
   background-color: white;
   border-bottom: 1px solid #ddd
 }
+
+.donate .card {
+  max-width: 500px;
+  margin: auto;
+  margin-top: 2rem;
+}
