@@ -16,19 +16,31 @@ module.exports = {
    * @return {Object}
    */
   async create(ctx) {
-    // Standard Strapi create entity
-    let entity;
-    if (ctx.is("multipart")) {
-      const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services.donation.create(data, { files });
-    } else {
-      entity = await strapi.services.donation.create(ctx.request.body);
+    if (!ctx.state.user) {
+      ctx.response.status = 401;
+      ctx.response.body = {
+        success: false,
+        message: "You must be logged in to make a donation",
+      };
+      return;
     }
+
+    // Create donation entry
+    const userInput = ctx.request.body;
+    let entity = {};
+    // TODO validation
+    entity.price = userInput.price;
+    entity.points = 69; // TODO convert price to points here
+    entity.user_id = ctx.state.user.id;
+
+    entity = await strapi.services.donation.create(entity);
     const donation = sanitizeEntity(entity, { model: strapi.models.donation });
 
     // Create checkout on Stripe
     const price = donation.price;
     const YOUR_DOMAIN = "https://listapp-api.glhf.lol:13337";
+    const SUCCESS_URL = `${YOUR_DOMAIN}/success`;
+    const CANCEL_URL = `${YOUR_DOMAIN}/cancel`;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -36,7 +48,7 @@ module.exports = {
           price_data: {
             currency: "gbp",
             product_data: {
-              name: "ListApp Donation"
+              name: "ListApp Donation",
             },
             unit_amount: price,
           },
@@ -44,15 +56,22 @@ module.exports = {
         },
       ],
       mode: "payment",
-      success_url: `${YOUR_DOMAIN}/success`,
-      cancel_url: `${YOUR_DOMAIN}/cancel`,
+      success_url: SUCCESS_URL,
+      cancel_url: CANCEL_URL,
       metadata: {
-        donation_id: donation.id
-      }
+        donation_id: donation.id,
+      },
     });
 
     // return checkout session id
-    return { checkout_session: session.id, donation, price };
+    return {
+      checkout_session: session.id,
+      donation,
+      price,
+      callbacks: {
+        success: SUCCESS_URL,
+        cancel: CANCEL_URL
+      }};
   },
 
   async stripeWebhook(ctx) {

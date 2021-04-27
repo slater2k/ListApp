@@ -16,7 +16,7 @@
       "default": 0,
       "required": true
     },
-    "user": {
+    "user_id": {
       "columnName": "user_id",
       "plugin": "users-permissions",
       "model": "user",
@@ -28,7 +28,9 @@
     "price": {
       "default": 0,
       "required": true,
-      "type": "decimal"
+      "type": "integer",
+      "private": false,
+      "min": 0
     }
   }
 }
