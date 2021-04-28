@@ -1,16 +1,28 @@
+import { useContext, useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom';
+import { UsersContext } from './Contexts/UsersContext';
 
-const ListUser = ({fakeListData}) => {
-
+const ListUser = () => {
 	const { userId } = useParams();
+	let [user, setUser] = useState({
+		profile_image: 'loading',
+		first_name: 'loading',
+		last_name: 'loading',
+		rank: 'loading',
+		score: 'loading',
+		email: 'loading',
+		ip_address: 'loading',
+	});
 
-	const getUserDataById = (userId, listData) => {
-		return listData.filter((data) => {
-			return data.id === parseInt(userId);
-		})[0]
-	}
+	const fetchUser = async (userId) => {
+		let response = await fetch(`http://listapp-api.glhf.lol:13337/users/${userId}`)
+		let user = await response.json();
+		return user;
+	};
 
-	const { first_name, last_name, email, profile_image, ip_address, list_rank, score } = getUserDataById(userId, fakeListData);
+	useEffect(async () => {
+		setUser(await fetchUser(userId));
+	}, []);
 
 	return (
 		<div className="row gutters">
@@ -18,14 +30,14 @@ const ListUser = ({fakeListData}) => {
 				<div className="card h-100">
 					<div className="card-body">
 						<div className="profile-user-preamble text-center pb-3">
-							<div className="user-avatar mb-3"><img src={profile_image} alt="" /></div>
-							<h5 className="user-name">{first_name} {last_name}</h5>
-							<div className="user-rank">#{list_rank}</div>
-							<div className="user-email d-block mb-1">{score}</div>
+							<div className="user-avatar mb-3"><img src={user.profile_image} alt="" /></div>
+							<h5 className="user-name">{user.first_name} {user.last_name}</h5>
+							<div className="user-rank">#{user.list_rank}</div>
+							<div className="user-email d-block mb-1">{user.score}</div>
 						</div>
 						<div className="profile-user-information text-center mt-3">
-							<div className="user-email d-block mb-1">{email}</div>
-							<div className="user-email d-block mb-1">{ip_address}</div>
+							<div className="user-email d-block mb-1">{user.email}</div>
+							<div className="user-email d-block mb-1">{user.ip_address}</div>
 						</div>
 					</div>
 				</div>

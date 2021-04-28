@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UsersContext } from './Contexts/UsersContext';
 
-const List = ({fakeListData}) => {
+const List = () => {
+	const {users, setUsers} = useContext(UsersContext);
 
 	/**
 	 * Sort function to re-arrange data by highest to lowest list_rank
@@ -14,11 +17,11 @@ const List = ({fakeListData}) => {
 		return 0;
 	}
 
-	fakeListData.sort( compareRank );
+	users.sort( compareRank );
 
 	return (
 		<ul className="list-group list-content">
-			{fakeListData.map((listItem) => (
+			{users.map((listItem) => (
 				<div className={`list-group-item ${listItem.list_rank === 1 ? "legendary-user" : listItem.list_rank <= 5 ? "epic-user" : listItem.list_rank <= 10 ? "rare-user" : ""}`} key={listItem.list_rank}>
 					<div className="row">
 						<div className="col">

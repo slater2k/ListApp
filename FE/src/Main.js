@@ -6,12 +6,13 @@ import Donate from "./Donate";
 import ListUser from "./ListUser";
 import Login from "./Login";
 import { useEffect, useState } from 'react';
+import { UsersContext } from './Contexts/UsersContext';
 
 function Main() {    
     const [users, setUsers] = useState([]);
 
     const getUsers = async () => {
-        const res = await (await fetch('http://127.0.0.1:13337/users')).json();
+        const res = await (await fetch('http://listapp-api.glhf.lol:13337/users')).json();
         let counter = 1;
         setUsers(res.map((user) => {
             return {
@@ -31,31 +32,32 @@ function Main() {
         getUsers();
     }, []);
 
-
     return (
         <Router>
-            <div id="main-container" className="container">
-                <Navigation />
-                <div className="content-inner">
-                    <Switch>
-                        <Route exact path="/">
-                            <List fakeListData={users} />
-                        </Route>
-                        <Route path="/user/:userId">
-                            <ListUser fakeListData={users} />
-                        </Route>
-                        <Route path="/account">
-                            <Account />
-                        </Route>
-                        <Route path="/donate">
-                            <Donate />
-                        </Route>
-                        <Route path="/login">
-                            <Login />
-                        </Route>
-                    </Switch>
+            <UsersContext.Provider value={{users, setUsers}}>
+                <div id="main-container" className="container">
+                    <Navigation />
+                    <div className="content-inner">
+                        <Switch>
+                            <Route exact path="/">
+                                <List />
+                            </Route>
+                            <Route path="/user/:userId">
+                                <ListUser />
+                            </Route>
+                            <Route path="/account">
+                                <Account />
+                            </Route>
+                            <Route path="/donate">
+                                <Donate />
+                            </Route>
+                            <Route path="/login">
+                                <Login />
+                            </Route>
+                        </Switch>
+                    </div>
                 </div>
-            </div>
+            </UsersContext.Provider>
         </Router>
     );
 }
