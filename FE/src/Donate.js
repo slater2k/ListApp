@@ -1,9 +1,11 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import { loadStripe } from '@stripe/stripe-js';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
+import {ConfigContext} from "./Contexts/ConfigContext";
 
 const Donate = () => {
+	const { config } = useContext(ConfigContext);
 	const getDonationTier = (donationAmount) => {
 		return Math.floor(donationAmount / 100) > 5 ? 5 : Math.floor(donationAmount / 100);
 	}
@@ -37,7 +39,7 @@ const Donate = () => {
 
         // POST /donations
 		const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE5NTUwOTgwLCJleHAiOjE2MjIxNDI5ODB9.TCGDfwLe2blaU8njxMuP5GZ-zYlkXO2pS2iqI10wR0Y';
-		let response = await fetch(`http://localhost:13337/donations`, {
+		let response = await fetch(`${config.API_URL}/donations`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ const Donate = () => {
 		const checkoutSession = response.checkout_session;
 
         try {
-            const stripePromise = loadStripe('pk_test_51If4ugLhl4Z9YEbRVqfuTZsAvRwCzqkJc29h0ikx3yVFQgSigKtFj5yg3kpbfKy7jFmUGvc7G7z4LL4fpAHcwkAu00SGzefzfH');
+            const stripePromise = loadStripe(config.STRIPE.PUBLIC_KEY);
             const stripe = await stripePromise;
             await stripe.redirectToCheckout({ sessionId: checkoutSession });
         } catch(e) {

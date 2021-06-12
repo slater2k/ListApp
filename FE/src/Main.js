@@ -5,14 +5,17 @@ import Account from "./Account";
 import Donate from "./Donate";
 import ListUser from "./ListUser";
 import Login from "./Login";
-import { useEffect, useState } from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { UsersContext } from './Contexts/UsersContext';
+import { ConfigContext } from "./Contexts/ConfigContext";
+import { default as defaultConfig } from './config/default';
 
 function Main() {    
     const [users, setUsers] = useState([]);
+    const [config] = useState(defaultConfig);
 
     const getUsers = async () => {
-        const res = await (await fetch('http://listapp-api.glhf.lol:13337/users')).json();
+        const res = await (await fetch(`${config.API_URL}/users`)).json();
         let counter = 1;
         setUsers(res.map((user) => {
             return {
@@ -35,6 +38,7 @@ function Main() {
     return (
         <Router>
             <UsersContext.Provider value={{users, setUsers}}>
+            <ConfigContext.Provider value={{config}}>
                 <div id="main-container" className="container">
                     <Navigation />
                     <div className="content-inner">
@@ -57,6 +61,7 @@ function Main() {
                         </Switch>
                     </div>
                 </div>
+            </ConfigContext.Provider>
             </UsersContext.Provider>
         </Router>
     );

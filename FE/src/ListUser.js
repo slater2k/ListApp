@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom';
 import { UsersContext } from './Contexts/UsersContext';
+import {ConfigContext} from "./Contexts/ConfigContext";
 
 const ListUser = () => {
 	const { userId } = useParams();
+	const {config} = useContext(ConfigContext);
+
 	let [user, setUser] = useState({
 		profile_image: 'loading',
 		first_name: 'loading',
@@ -15,7 +18,7 @@ const ListUser = () => {
 	});
 
 	const fetchUser = async (userId) => {
-		let response = await fetch(`http://listapp-api.glhf.lol:13337/users/${userId}`)
+		let response = await fetch(`${config.API_URL}/users/${userId}`)
 		let user = await response.json();
 		return user;
 	};
