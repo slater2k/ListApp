@@ -5,39 +5,18 @@ import Account from "./Account";
 import Donate from "./Donate";
 import ListUser from "./ListUser";
 import Login from "./Login";
-import {useContext, useEffect, useState} from 'react';
-import { UsersContext } from './Contexts/UsersContext';
+import Register from "./Register";
+import NotFound from "./NotFound";
+import { useContext, useEffect, useState } from 'react';
 import { ConfigContext } from "./Contexts/ConfigContext";
 import { default as defaultConfig } from './config/default';
 
-function Main() {    
-    const [users, setUsers] = useState([]);
+function Main() {
+
     const [config] = useState(defaultConfig);
-
-    const getUsers = async () => {
-        const res = await (await fetch(`${config.API_URL}/users`)).json();
-        let counter = 1;
-        setUsers(res.map((user) => {
-            return {
-                "id": user.id,
-                "first_name": user.username,
-                "last_name": "", // TODO do we want last names or just usernames
-                "email": user.email,
-                "profile_image": "http://dummyimage.com/198x196.bmp/ff4444/ffffff",
-                "ip_address": "",
-                "list_rank": counter++, // TODO this is a dummy rank
-                "score": 100 - counter // TODO this is a dummy score
-            }
-        }));
-    }
-
-    useEffect(() => {
-        getUsers();
-    }, []);
 
     return (
         <Router>
-            <UsersContext.Provider value={{users, setUsers}}>
             <ConfigContext.Provider value={{config}}>
                 <div id="main-container" className="container">
                     <Navigation />
@@ -58,11 +37,21 @@ function Main() {
                             <Route path="/login">
                                 <Login />
                             </Route>
+                            <Route path="/register">
+                                <Register />
+                            </Route>
+                            <Route path="*">
+                                <NotFound />
+                            </Route>
                         </Switch>
                     </div>
                 </div>
             </ConfigContext.Provider>
-            </UsersContext.Provider>
+            <div className="dynamic-background-wrapper">
+                <div className="bg"></div>
+                <div className="bg bg2"></div>
+                <div className="bg bg3"></div>
+            </div>
         </Router>
     );
 }

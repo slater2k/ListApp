@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { loadStripe } from '@stripe/stripe-js';
 
 const Navigation = () => {
+
+	const isLoggedIn = false;
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light py-4">
@@ -14,12 +15,16 @@ const Navigation = () => {
 						<li className="nav-item active">
 							<Link className="nav-link" to="/">Home</Link>
 						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="/account">Account</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="/login">Login</Link>
-						</li>
+						{
+							isLoggedIn ?
+							<li className="nav-item">
+								<Link className="nav-link" to="/account">Account</Link>
+							</li>
+							:
+							<li className="nav-item">
+								<Link className="nav-link" to="/login">Log in</Link>
+							</li>
+						}
 						<li className="nav-item">
 							<Link className="nav-link pr-0" to="/donate">Donate to the cause!</Link>
 						</li>

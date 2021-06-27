@@ -1,37 +1,28 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { UsersContext } from './Contexts/UsersContext';
+import { default as defaultConfig } from './config/default';
+import useFetch from "./Services/useFetch";
+import ListLoading from "./LoadingTemplates/ListLoading";
 
 const List = () => {
-	const {users, setUsers} = useContext(UsersContext);
 
-	/**
-	 * Sort function to re-arrange data by highest to lowest list_rank
-	 * @param a
-	 * @param b
-	 * @returns {number}
-	 */
-	function compareRank( a, b ) {
-		if ( a.list_rank < b.list_rank ) {return -1;}
-		if ( a.list_rank > b.list_rank ) {return 1;}
-		return 0;
-	}
-
-	users.sort( compareRank );
+	const {data: users, isLoading, error} = useFetch(`${defaultConfig.API_URL}/users`, 'Error fetching List Users, please try again.');
 
 	return (
 		<ul className="list-group list-content">
-			{users.map((listItem) => (
-				<div className={`list-group-item ${listItem.list_rank === 1 ? "legendary-user" : listItem.list_rank <= 5 ? "epic-user" : listItem.list_rank <= 10 ? "rare-user" : ""}`} key={listItem.list_rank}>
+			{isLoading && <ListLoading />}
+			{users && users.map((user) => (
+				<div className={`list-group-item ${user.id === 1 ? "legendary-user" : user.id <= 5 ? "epic-user" : user.id <= 10 ? "rare-user" : ""}`} key={user.id}>
 					<div className="row">
 						<div className="col">
-							<strong className="mr-4">#{listItem.list_rank}</strong>
-							<Link to={`/User/${listItem.id}`}>
-								{listItem.first_name} {listItem.last_name}
+							<strong className="mr-4">#{user.id}</strong>
+							<Link to={`/User/${user.id}`}>
+								{user.username}
 							</Link>
 						</div>
 						<div className="col-auto">
-							<strong>{listItem.score}</strong>
+							{/*fudge the points for now*/}
+							<strong>{100 - user.id}</strong>
 						</div>
 					</div>
 				</div>

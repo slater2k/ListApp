@@ -1,6 +1,6 @@
 const Account = () => {
 	return (
-		<div className="account">account content</div>
+		<div className="account">My account panel</div>
 	);
 }
 
