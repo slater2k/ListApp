@@ -7,17 +7,17 @@ import ListUser from "./ListUser";
 import Login from "./Login";
 import Register from "./Register";
 import NotFound from "./NotFound";
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ConfigContext } from "./Contexts/ConfigContext";
 import { default as defaultConfig } from './config/default';
 
 function Main() {
 
-    const [config] = useState(defaultConfig);
+    const [config, setConfig] = useState(defaultConfig);
 
     return (
         <Router>
-            <ConfigContext.Provider value={{config}}>
+            <ConfigContext.Provider value={{config, setConfig}}>
                 <div id="main-container" className="container">
                     <Navigation />
                     <div className="content-inner">

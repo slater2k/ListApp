@@ -1,8 +1,9 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import {Link, useHistory} from 'react-router-dom';
+import {ConfigContext} from "./Contexts/ConfigContext";
 
 const Register = () => {
-
+    const { config, setConfig } = useContext(ConfigContext)
     const history = useHistory();
     const [createUsername, setCreateUsername] = useState('');
     const [createEmail, setCreateEmail] = useState('');
@@ -18,12 +19,17 @@ const Register = () => {
             "confirmed": true // Maybe set true after email validation in future?
         };
 
-        // whos left this dirty exposed url 👀 - defo roper
-        await fetch('http://localhost:13337/auth/local/register', {
+        let response = await fetch(`${config.API_URL}/auth/local/register`, {
             method: 'POST',
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify(createAccountParams),
         });
+
+        response = await response.json();
+
+        // maybe better to store this in localstorage as we have to login everytime with this implementation zzz
+        config.auth = response;
+        setConfig(config);
 
         history.push('/');
     };
