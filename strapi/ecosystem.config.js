@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    'name': 'ListAppTest',
+    'name': 'ListApp',
     'script': 'npm',
     'args': 'run develop',
     'restart_delay': 5000
