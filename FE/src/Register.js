@@ -29,6 +29,7 @@ const Register = () => {
 
         // maybe better to store this in localstorage as we have to login everytime with this implementation zzz
         config.auth = response;
+        console.log(config.auth)
         setConfig(config);
 
         history.push('/');

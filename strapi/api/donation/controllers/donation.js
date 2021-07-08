@@ -38,8 +38,8 @@ module.exports = {
 
     // Create checkout on Stripe
     const price = donation.price;
-    const YOUR_DOMAIN = "https://listapp-api.glhf.lol:13337";
-    const SUCCESS_URL = `${YOUR_DOMAIN}/success`;
+    const YOUR_DOMAIN = "http://listapp.glhf.lol/";
+    const SUCCESS_URL = `${YOUR_DOMAIN}/thank-you`;
     const CANCEL_URL = `${YOUR_DOMAIN}/cancel`;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
