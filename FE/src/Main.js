@@ -14,19 +14,19 @@ import { AuthContext } from './Contexts/AuthContext';
 
 function Main() {
 
-
     let initialAuthState = {
         user: null,
         jwt: null,
     };
 
     // On first load, check localStorage to see if the user is logged in or not
-    if(localStorage.getItem('jwt')) {
-        initialAuthState = {
-            'user': JSON.parse(localStorage.getItem('user')),
-            'jwt': localStorage.getItem('jwt'),
-        }
-    }
+    // Buggy.  too lazy to debug atm.  JSON.parse(localStorage.getItem('user')) sometimes the user is not json encoded
+    // if(localStorage.getItem('jwt')) {
+    //     initialAuthState = {
+    //         'user': JSON.parse(localStorage.getItem('user')),
+    //         'jwt': localStorage.getItem('jwt'),
+    //     }
+    // }
 
     const authReducer = (state, action) => {
         switch (action.type) {
