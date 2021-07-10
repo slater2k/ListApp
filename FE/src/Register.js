@@ -1,9 +1,11 @@
 import {useState, useContext} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {ConfigContext} from "./Contexts/ConfigContext";
+import { AuthContext } from "./Contexts/AuthContext";
 
 const Register = () => {
-    const { config, setConfig } = useContext(ConfigContext)
+    const { config } = useContext(ConfigContext)
+    const { auth, dispatchAuth} = useContext(AuthContext);
     const history = useHistory();
     const [createUsername, setCreateUsername] = useState('');
     const [createEmail, setCreateEmail] = useState('');
@@ -27,10 +29,11 @@ const Register = () => {
 
         response = await response.json();
 
-        // maybe better to store this in localstorage as we have to login everytime with this implementation zzz
-        config.auth = response;
-        console.log(config.auth)
-        setConfig(config);
+        dispatchAuth({
+            'type': 'LOGIN',
+            'user': response.user,
+            'jwt': response.jwt,
+        })
 
         history.push('/');
     };

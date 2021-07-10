@@ -2,11 +2,11 @@ import * as yup from "yup";
 import Swal from "sweetalert2";
 import { loadStripe } from "@stripe/stripe-js";
 
-export default async function (e, config) {
+export default async function (e, config, auth) {
     e.preventDefault();
 
     // Check user is logged in
-    if (!config?.auth?.jwt) {
+    if (!auth.jwt) {
         // TODO: let them register here
         await Swal.fire({
             text: 'You must be logged in to donate!',
@@ -16,7 +16,7 @@ export default async function (e, config) {
 
         return;
     }
-    const jwt = config.auth.jwt;
+    const jwt = auth.jwt;
 
     // Validate input
     const userInput = {
@@ -51,8 +51,6 @@ export default async function (e, config) {
     // Try to redirect to stripe checkout
     response = await response.json();
     const checkoutSession = response.checkout_session;
-
-    debugger;
 
     try {
         const stripePromise = loadStripe(config.STRIPE.PUBLIC_KEY);

@@ -1,6 +1,7 @@
 import {useContext, useState} from "react";
 import handleDonate from "./handleDonate";
-import {ConfigContext} from "../Contexts/ConfigContext";
+import { AuthContext } from "../Contexts/AuthContext";
+import { ConfigContext } from "../Contexts/ConfigContext";
 
 const Donate = () => {
 	const getDonationTier = (donationAmount) => {
@@ -12,6 +13,7 @@ const Donate = () => {
 		setTreasureChest(getDonationTier(donationAmount));
 	}
 
+	const {auth} = useContext(AuthContext);
 	const {config} = useContext(ConfigContext);
 	const [donationAmount, setDonationAmount] = useState(250);
 	const [treasureChest, setTreasureChest] = useState(getDonationTier(donationAmount));
@@ -19,7 +21,7 @@ const Donate = () => {
 	return (
 		<div className="donate">
 			<div className="card">
-				<form action="" method="POST" onSubmit={(e) => {handleDonate(e, config)}} >
+				<form action="" method="POST" onSubmit={(e) => {handleDonate(e, config, auth)}} >
 					<div className="card-header">Donate!</div>
 					<div className="card-body">
 						<div className="input-group mb-3">

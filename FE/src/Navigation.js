@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useContext } from "react";
+import { AuthContext } from "./Contexts/AuthContext";
 
 const Navigation = () => {
-
-	const isLoggedIn = false;
+	const {auth} = useContext(AuthContext)
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light py-4">
@@ -16,7 +17,7 @@ const Navigation = () => {
 							<Link className="nav-link" to="/">Home</Link>
 						</li>
 						{
-							isLoggedIn ?
+							auth.jwt !== null ?
 							<li className="nav-item">
 								<Link className="nav-link" to="/account">Account</Link>
 							</li>
