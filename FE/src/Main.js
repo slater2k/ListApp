@@ -12,42 +12,40 @@ import { ConfigContext } from "./Contexts/ConfigContext";
 import { default as defaultConfig } from './config/default';
 import { AuthContext } from './Contexts/AuthContext';
 
+let initialAuthState = {
+    user: null,
+    jwt: null,
+};
+
+// On first load, check localStorage to see if the user is logged in or not
+if(localStorage.getItem('jwt')) {
+    initialAuthState = {
+        'user': JSON.parse(localStorage.getItem('user')),
+        'jwt': localStorage.getItem('jwt'),
+    }
+}
+
+const authReducer = (state, action) => {
+    switch (action.type) {
+        case "LOGIN":
+            localStorage.setItem("user", JSON.stringify(action.user));
+            localStorage.setItem("jwt", action.jwt);
+            return {
+                user: action.user,
+                jwt: action.jwt
+            };
+        case "LOGOUT":
+            localStorage.clear();
+            return {
+                user: null,
+                jwt: null
+            };
+        default:
+            return state;
+    }
+};
+
 function Main() {
-
-    let initialAuthState = {
-        user: null,
-        jwt: null,
-    };
-
-    // On first load, check localStorage to see if the user is logged in or not
-    // Buggy.  too lazy to debug atm.  JSON.parse(localStorage.getItem('user')) sometimes the user is not json encoded
-    // if(localStorage.getItem('jwt')) {
-    //     initialAuthState = {
-    //         'user': JSON.parse(localStorage.getItem('user')),
-    //         'jwt': localStorage.getItem('jwt'),
-    //     }
-    // }
-
-    const authReducer = (state, action) => {
-        switch (action.type) {
-            case "LOGIN":
-                localStorage.setItem("user", JSON.stringify(action.user));
-                localStorage.setItem("jwt", action.jwt);
-                return {
-                    user: action.user,
-                    jwt: action.jwt
-                };
-            case "LOGOUT":
-                localStorage.clear();
-                return {
-                    user: null,
-                    jwt: null
-                };
-            default:
-                return state;
-        }
-    };
-
     const [auth, dispatchAuth] = useReducer(authReducer, initialAuthState);
 
     return (
