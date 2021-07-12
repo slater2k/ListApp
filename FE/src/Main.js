@@ -19,9 +19,12 @@ let initialAuthState = {
 
 // On first load, check localStorage to see if the user is logged in or not
 if(localStorage.getItem('jwt')) {
-    initialAuthState = {
-        'user': JSON.parse(localStorage.getItem('user')),
-        'jwt': localStorage.getItem('jwt'),
+    try {
+        initialAuthState = {
+            'user': JSON.parse(localStorage.getItem('user')),
+            'jwt': localStorage.getItem('jwt'),
+        };
+    } catch (e) {
     }
 }
 
