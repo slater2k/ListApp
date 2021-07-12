@@ -7,7 +7,7 @@ import ListUser from "./ListUser";
 import Login from "./Login";
 import Register from "./Register";
 import NotFound from "./NotFound";
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { ConfigContext } from "./Contexts/ConfigContext";
 import { default as defaultConfig } from './config/default';
 import { AuthContext } from './Contexts/AuthContext';
@@ -50,6 +50,25 @@ const authReducer = (state, action) => {
 
 function Main() {
     const [auth, dispatchAuth] = useReducer(authReducer, initialAuthState);
+
+    useEffect(async () => {
+        if (auth.jwt) {
+            // Refresh auth.user
+            let userResponse = await fetch(`${defaultConfig.API_URL}/users/${auth.user.id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth.jwt}`
+                },
+            });
+            let user = await userResponse.json();
+
+            dispatchAuth({
+                'action': 'LOGIN',
+                'jwt': auth.jwt,
+                'user': user
+            });
+        }
+    }, []);
 
     return (
         <Router>
