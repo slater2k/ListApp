@@ -2,7 +2,7 @@ import * as yup from "yup";
 import Swal from "sweetalert2";
 import { loadStripe } from "@stripe/stripe-js";
 
-export default async function (e, config, auth) {
+const handleDonate = async function (e, config, auth) {
     e.preventDefault();
 
     // Check user is logged in
@@ -60,3 +60,5 @@ export default async function (e, config, auth) {
         console.error(e);
     }
 };
+
+export default handleDonate;

@@ -51,24 +51,28 @@ const authReducer = (state, action) => {
 function Main() {
     const [auth, dispatchAuth] = useReducer(authReducer, initialAuthState);
 
-    useEffect(async () => {
-        if (auth.jwt) {
-            // Refresh auth.user
-            let userResponse = await fetch(`${defaultConfig.API_URL}/users/${auth.user.id}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${auth.jwt}`
-                },
-            });
-            let user = await userResponse.json();
+    useEffect(() => {
+        const loadLoginState = async () => {
+            if (auth.jwt) {
+                // Refresh auth.user
+                let userResponse = await fetch(`${defaultConfig.API_URL}/users/${auth.user.id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${auth.jwt}`
+                    },
+                });
+                let user = await userResponse.json();
 
-            dispatchAuth({
-                'action': 'LOGIN',
-                'jwt': auth.jwt,
-                'user': user
-            });
-        }
-    }, []);
+                dispatchAuth({
+                    'action': 'LOGIN',
+                    'jwt': auth.jwt,
+                    'user': user
+                });
+            }
+        };
+
+        loadLoginState();
+    }, [auth?.jwt , auth?.user?.id]);
 
     return (
         <Router>

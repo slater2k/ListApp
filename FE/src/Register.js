@@ -5,7 +5,7 @@ import { AuthContext } from "./Contexts/AuthContext";
 
 const Register = () => {
     const { config } = useContext(ConfigContext)
-    const { auth, dispatchAuth} = useContext(AuthContext);
+    const { dispatchAuth } = useContext(AuthContext);
     const history = useHistory();
     const [createUsername, setCreateUsername] = useState('');
     const [createEmail, setCreateEmail] = useState('');
@@ -14,6 +14,12 @@ const Register = () => {
 
     const handleCreateAccount = async (e) => {
         e.preventDefault();
+
+        if (createVerifyPassword !== createPassword) {
+            alert('TODO: change this to a sweet alert')
+            return;
+        }
+
         const createAccountParams = {
             "username": createUsername,
             "email": createEmail,

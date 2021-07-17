@@ -1,13 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { ConfigContext } from "./Contexts/ConfigContext";
+import { useParams } from 'react-router-dom';
 import {default as defaultConfig} from "./config/default";
 import useFetch from "./Services/useFetch";
 import ListUserLoading from "./LoadingTemplates/ListUserLoading"
 
 const ListUser = () => {
 	const { userId } = useParams();
-	const { config } = useContext(ConfigContext);
 
 	/**
 	 * Lets not pass data around in context (sorry)
@@ -16,7 +13,7 @@ const ListUser = () => {
 	 * My idea is we do a lightweight search on the list, then a deeper context search per user (kinda like vision with search/detail views)
 	 * //todo we could cache the last 15 users the user has clicked on in session storage
 	 */
-	const {data: user, isLoading, error} = useFetch(`${defaultConfig.API_URL}/users/`+userId, 'Error fetching User, please try again.');
+	const {data: user, isLoading} = useFetch(`${defaultConfig.API_URL}/users/`+userId, 'Error fetching User, please try again.');
 
 	return (
 		<div className="profile page">

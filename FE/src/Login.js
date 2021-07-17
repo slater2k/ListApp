@@ -62,9 +62,9 @@ const Login = () => {
 
                 <div className="form-group">
                     <button type="submit" className="btn btn-primary btn-block">Log in</button>
-                    <a href="" className="btn btn-block btn-facebook" title="Log in with Facebook"> <i
+                    <a href="#" className="btn btn-block btn-facebook" title="Log in with Facebook"> <i
                         className="fab fa-facebook-f"></i> With facebook</a>
-                    <a href="" className="btn btn-block btn-twitter" title="Log in with Twitter"> <i
+                    <a href="#" className="btn btn-block btn-twitter" title="Log in with Twitter"> <i
                         className="fab fa-twitter"></i> With Twitter</a>
                 </div>
             </form>

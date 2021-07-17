@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { default as defaultConfig } from './config/default';
 import useFetch from "./Services/useFetch";
@@ -6,7 +5,7 @@ import ListLoading from "./LoadingTemplates/ListLoading";
 
 const List = () => {
 
-	const {data: users, isLoading, error} = useFetch(`${defaultConfig.API_URL}/users`, 'Error fetching List Users, please try again.');
+	const {data: users, isLoading} = useFetch(`${defaultConfig.API_URL}/users`, 'Error fetching List Users, please try again.');
 
 	return (
 		<ul className="list-group list-content">
