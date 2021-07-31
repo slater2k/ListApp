@@ -2,6 +2,8 @@ import {useState, useContext} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {ConfigContext} from "./Contexts/ConfigContext";
 import { AuthContext } from "./Contexts/AuthContext";
+import Swal from "sweetalert2";
+import RegisterRequest from "./Requests/RegisterRequest";
 
 const Register = () => {
     const { config } = useContext(ConfigContext)
@@ -15,22 +17,27 @@ const Register = () => {
     const handleCreateAccount = async (e) => {
         e.preventDefault();
 
-        if (createVerifyPassword !== createPassword) {
-            alert('TODO: change this to a sweet alert')
-            return;
-        }
-
-        const createAccountParams = {
+        let registerRequest = new RegisterRequest({
             "username": createUsername,
             "email": createEmail,
             "password": createPassword,
+            "confirmPassword": createVerifyPassword,
             "confirmed": true // Maybe set true after email validation in future?
-        };
+        });
+
+        if (!await registerRequest.isValid()) {
+            await Swal.fire({
+                text: 'TODO: make return inline errors',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+            return;
+        }
 
         let response = await fetch(`${config.API_URL}/auth/local/register`, {
             method: 'POST',
             headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify(createAccountParams),
+            body: JSON.stringify(registerRequest),
         });
 
         response = await response.json();
