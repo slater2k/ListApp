@@ -1,9 +1,9 @@
 import {useState, useContext} from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import {ConfigContext} from "./Contexts/ConfigContext";
-import { AuthContext } from "./Contexts/AuthContext";
+import {ConfigContext} from "../../Contexts/ConfigContext";
+import { AuthContext } from "../../Contexts/AuthContext";
 import Swal from "sweetalert2";
-import RegisterRequest from "./Requests/RegisterRequest";
+import RegisterRequest from "../../Requests/RegisterRequest";
 
 const Register = () => {
     const { config } = useContext(ConfigContext)

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import {default as defaultConfig} from "./config/default";
-import useFetch from "./Services/useFetch";
-import ListUserLoading from "./LoadingTemplates/ListUserLoading"
+import {default as defaultConfig} from "../../config/default";
+import useFetch from "../../Services/useFetch";
+import ListUserLoading from "./ListUserLoading"
 
 const ListUser = () => {
 	const { userId } = useParams();
@@ -42,28 +42,19 @@ const ListUser = () => {
 							<div className="row">
 								<div className="col">
 									<ul className="timeline">
-										<li>
-											<a target="_blank" href="#">Added 392 points</a>
-											<a href="#" className="float-right">21 March, 2014</a>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-												scelerisque diam non nisi semper, et elementum lorem ornare.
-												Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales
-												vehicula....</p>
-										</li>
-										<li>
-											<a target="_blank" href="#">Added 1099 points</a>
-											<a href="#" className="float-right">4 March, 2014</a>
-											<p>Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis.
-												Nam pellentesque felis vitae justo accumsan, sed semper nisi
-												sollicitudin...</p>
-										</li>
-										<li>
-											<a target="_blank" href="#">Added 2382 points</a>
-											<a href="#" className="float-right">1 April, 2014</a>
-											<p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla
-												odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec
-												tempor nibh...</p>
-										</li>
+										{user.donations.map((donation) => {
+											return (
+												<li key={donation.id}>
+													<a target="_blank" href="#">Added {donation.points} points</a>
+													{/* shoud use published_at instead but idk why thats null */}
+													<a href="#" className="float-right">{donation.created_at}</a>
+													<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+														scelerisque diam non nisi semper, et elementum lorem ornare.
+														Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales
+														vehicula....</p>
+												</li>
+											)
+										})}
 									</ul>
 								</div>
 							</div>

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { default as defaultConfig } from './config/default';
-import useFetch from "./Services/useFetch";
-import ListLoading from "./LoadingTemplates/ListLoading";
+import config from '../../config';
+import useFetch from "../../Services/useFetch";
+import ListLoading from "./ListLoading";
 
 const List = () => {
 
-	const {data: users, isLoading} = useFetch(`${defaultConfig.API_URL}/users`, 'Error fetching List Users, please try again.');
+	const {data: users, isLoading} = useFetch(`${config.API_URL}/users`, 'Error fetching List Users, please try again.');
 
 	return (
 		<ul className="list-group list-content">
@@ -15,13 +15,12 @@ const List = () => {
 					<div className="row">
 						<div className="col">
 							<strong className="mr-4">#{user.id}</strong>
-							<Link to={`/User/${user.id}`}>
+							<Link to={`/user/${user.id}`}>
 								{user.username}
 							</Link>
 						</div>
 						<div className="col-auto">
-							{/*fudge the points for now*/}
-							<strong>{100 - user.id}</strong>
+							<strong>{user.donations.reduce((carry, donation) => {return carry + donation.points}, 0)}</strong>
 						</div>
 					</div>
 				</div>

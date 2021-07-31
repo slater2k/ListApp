@@ -1,7 +1,7 @@
 import {useContext, useState} from "react";
 import handleDonate from "./handleDonate";
-import { AuthContext } from "../Contexts/AuthContext";
-import { ConfigContext } from "../Contexts/ConfigContext";
+import { AuthContext } from "../../Contexts/AuthContext";
+import { ConfigContext } from "../../Contexts/ConfigContext";
 
 const Donate = () => {
 	const getDonationTier = (donationAmount) => {

@@ -1,7 +1,7 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useContext, useState } from "react";
-import { ConfigContext } from "./Contexts/ConfigContext";
-import { AuthContext } from "./Contexts/AuthContext";
+import { ConfigContext } from "../../Contexts/ConfigContext";
+import { AuthContext } from "../../Contexts/AuthContext";
 
 const Login = () => {
     const [email, setEmail] = useState('');

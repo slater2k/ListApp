@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Navigation from "./Navigation";
-import List from "./List";
-import Account from "./Account";
-import Donate from "./Donate/";
-import ListUser from "./ListUser";
-import Login from "./Login";
-import Register from "./Register";
+import Navigation from "./Components/Navigation";
+import List from "./Components/List";
+import Account from "./Components/Account/Account";
+import Donate from "./Components/Donate/";
+import User from "./Components/User";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
 import NotFound from "./NotFound";
 import { useEffect, useReducer } from 'react';
 import { ConfigContext } from "./Contexts/ConfigContext";
@@ -86,7 +86,7 @@ function Main() {
                                     <List/>
                                 </Route>
                                 <Route path="/user/:userId">
-                                    <ListUser/>
+                                    <User/>
                                 </Route>
                                 <Route path="/account">
                                     <Account/>
