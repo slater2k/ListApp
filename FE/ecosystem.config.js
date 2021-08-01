@@ -22,7 +22,7 @@ module.exports = {
       // pre-deploy action
       // 'pre-deploy-local': "./pm2/3pre-deploy-local",
       // post-deploy action
-      'post-deploy': "cd FE && npm i",
+      'post-deploy': "pwd -P",
     },
   }
 }
