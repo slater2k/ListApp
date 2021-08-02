@@ -18,7 +18,7 @@ module.exports = {
       // pre-deploy action
       // 'pre-deploy-local': "./pm2/3pre-deploy-local",
       // post-deploy action
-      'post-deploy': "./deploy/post-deploy.sh",
+      'post-deploy': "cd FE && npm i && npm run build && pm2 restart ListApp",
     },
   }
 }
