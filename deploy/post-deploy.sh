@@ -1,0 +1,1 @@
+cd FE && npm i && npm run build && pm2 restart ListApp;

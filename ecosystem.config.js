@@ -1,8 +1,4 @@
 module.exports = {
-  apps: [{
-    name: "ListApp-FE",
-    script: "app.js"
-  }],
   deploy: {
     production: {
       key: "~/.ssh/jalex/jalex.pem",
@@ -13,7 +9,7 @@ module.exports = {
       ssh_options: "StrictHostKeyChecking=no",
       ref: "origin/master",
       repo: "git@github.com:slater2k/ListApp.git",
-      path: "/var/www/ListApp-test",
+      path: "/var/www/ListApp",
       // Pre-setup command or path to a script on your local machine
       // 'pre-setup': "./pm2/1pre-setup.sh",
       // Post-setup commands or path to a script on the host machine
@@ -22,7 +18,7 @@ module.exports = {
       // pre-deploy action
       // 'pre-deploy-local': "./pm2/3pre-deploy-local",
       // post-deploy action
-      'post-deploy': "pwd -P",
+      'post-deploy': "./deploy/post-deploy.sh",
     },
   }
 }
