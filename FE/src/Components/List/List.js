@@ -5,22 +5,24 @@ import ListLoading from "./ListLoading";
 
 const List = () => {
 
-	const {data: users, isLoading} = useFetch(`${config.API_URL}/users`, 'Error fetching List Users, please try again.');
+	const {data: response, isLoading} = useFetch(`${config.API_URL}/users`, 'Error fetching List Users, please try again.');
 
 	return (
 		<ul className="list-group list-content">
 			{isLoading && <ListLoading />}
-			{users && users.map((user) => (
-				<div className={`list-group-item ${user.id === 1 ? "legendary-user" : user.id <= 5 ? "epic-user" : user.id <= 10 ? "rare-user" : ""}`} key={user.id}>
+			{response && response.data.sort((a, b) => {
+				return a.ranking - b.ranking;
+			}).map((user) => (
+				<div className={`list-group-item ${user.ranking === 1 ? "legendary-user" : user.ranking <= 5 ? "epic-user" : user.ranking <= 10 ? "rare-user" : ""}`} key={user.id}>
 					<div className="row">
 						<div className="col">
-							<strong className="mr-4">#{user.id}</strong>
-							<Link to={`/user/${user.id}`}>
-								{user.username}
+							<strong className="mr-4">#{user.ranking}</strong>
+							<Link to={`/users/${user.id}`}>
+								{user.name}
 							</Link>
 						</div>
 						<div className="col-auto">
-							<strong>{user.donations.reduce((carry, donation) => {return carry + donation.points}, 0)}</strong>
+							<strong>{user.points}</strong>
 						</div>
 					</div>
 				</div>

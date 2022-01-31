@@ -85,7 +85,7 @@ function Main() {
                                 <Route exact path="/">
                                     <List/>
                                 </Route>
-                                <Route path="/user/:userId">
+                                <Route path="/users/:userId">
                                     <User/>
                                 </Route>
                                 <Route path="/account">
