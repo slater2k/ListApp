@@ -2,8 +2,16 @@ import { Link, useHistory } from 'react-router-dom';
 import { useContext, useState } from "react";
 import { ConfigContext } from "../../Contexts/ConfigContext";
 import { AuthContext } from "../../Contexts/AuthContext";
+import axios from "axios";
 
 const Login = () => {
+
+    const instance = axios.create({
+        baseURL: 'http://localhost:8000',
+        withCredentials: true,
+        timeout: 1000,
+    });
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {config} = useContext(ConfigContext);
@@ -13,30 +21,38 @@ const Login = () => {
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
 
-        // validate input
-        const loginDetails = {
-            'identifier': email,
-            'password': password
-        }
+        // const getCookie = await instance.get('/sanctum/csrf-cookie');
+        //
+        // console.log(getCookie);
+        //
+        // const tryToLogin = await instance.post(`/api/login`, {
+        //     email: "Josherzzzz@listapp.com",
+        //     password: "poopoo"
+        // });
+        //
+        // console.log(tryToLogin);
 
-        // send login request
-        let response = await fetch(`${config.API_URL}/auth/local`, {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(loginDetails),
-        });
-
-        response = await response.json();
-
-        // dispatch
-        dispatchAuth({
-            'type': 'LOGIN',
-            'user': response.user,
-            'jwt': response.jwt,
-        })
-
-        // redirect user to home
-        history.push('/');
+        // instance.get('/sanctum/csrf-cookie').then(response => {
+        //     console.log(response);
+        // }).then(() => {
+        //
+        //     fetch(`http://127.0.0.1:8000/api/login`, {
+        //         method:"POST",
+        //         email: "Josherzzzz@listapp.com",
+        //         password: "poopoo"
+        //     }).then(loginResponse => {
+        //
+        //         console.log(loginResponse);
+        //
+        //         if(loginResponse.data.success) {
+        //             console.log(loginResponse);
+        //         }
+        //         else {
+        //             alert("wrong creds yo");
+        //         }
+        //
+        //     });
+        // });
     };
 
     return (

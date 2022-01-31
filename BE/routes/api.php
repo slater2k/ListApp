@@ -18,12 +18,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('users', [\App\Http\Controllers\API\UserController::class, 'index']);
+/**
+ * Testing only logged in users can see the list
+ */
+Route::middleware('auth:sanctum')->get('users', [\App\Http\Controllers\API\UserController::class, 'index']);
+
 Route::get('users/{user:id}', [\App\Http\Controllers\API\UserController::class, 'show']);
 Route::post('register', [\App\Http\Controllers\API\RegisterController::class, 'register']);
 Route::post('login', [\App\Http\Controllers\API\LoginController::class, 'login']);
-
-Route::middleware('auth:api')->group( function () {
-    Route::resource('products', ProductController::class);
-});
 

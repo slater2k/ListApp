@@ -34,7 +34,8 @@ const useFetch = (url, errorMessage) => {
                 })
         }, 250)
 
-        return () => abortController.abort();
+        // return () => abortController.abort();
+        return;
 
     }, [url, errorMessage]);
 
